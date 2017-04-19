@@ -4,17 +4,25 @@ BUILD := `git rev-parse HEAD`
 
 # Use linker flags to provide version/build settings to the target
 LDFLAGS=-tags release -ldflags "-s -w -X=main.Version=$(VERSION) -X=main.Build=$(BUILD)"
+ARCH ?= `go env GOHOSTARCH`
+GOOS ?= `go env GOOS`
 
 all: agent master rendezvous
 
-agent: bin_dir
+package: clean all
+	cd bin && tar -zcvf reverse-shell-$(VERSION)-$(GOOS)-$(ARCH).tar.gz agent master rendezvous
+
+agent: build_dir
 	cd agents/go && go build $(LDFLAGS) -o ../../bin/agent
 
-master: bin_dir
+master: build_dir
 	cd master && go build $(LDFLAGS) -o ../bin/master
 
-rendezvous: bin_dir
+rendezvous: build_dir
 	cd rendezvous && go build $(LDFLAGS) -o ../bin/rendezvous
 
-bin_dir:
+build_dir:
 	mkdir -p bin
+
+clean:
+	rm -rf bin/*

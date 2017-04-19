@@ -16,7 +16,13 @@ This projects contains 3 applications that help you setting and interacting with
 * a `master` waiting for agent connections and that allow you to interact with the shells
 * a `rendezvous` application providing a central point where agents and masters meet when a direct connection is not possible/wanted (not mandatory)
 
-## Compilation
+## Installation
+Download the binaries
+```bash
+curl -O -L -s /dev/null https://github.com/maxlaverse/reverse-shell/releases/download/v0.0.1/reverse-shell-0.0.1-linux-amd64.tar.gz | tar xvz
+```
+
+Or build from source
 ```bash
 $ git clone https://github.com/maxlaverse/reverse-shell
 $ cd reverse-shell && make
